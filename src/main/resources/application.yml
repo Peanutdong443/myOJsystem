@@ -1,0 +1,42 @@
+#mysql
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/quesbankDB
+      username: root
+      password: 12345678
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+
+
+mybatis:
+  type-aliases-package: com.example.demo.model
+  mapper-locations: classpath:mapper/*.xml
+
+
+ #mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.nskm.entity	# 扫描实体，这里是实体类存放的包名
+
+
+  #pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+server:
+  port: 9090
+
+jwt:
+  token:
+    tokenExpiration: 8640000000
+    tokenSignKey: headline123456
+    tokenHeader: Authorization
