@@ -3,12 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dongd.quesbank.dao.UserDao">
 
-    <select id="getStuList" resultType="com.dongd.quesbank.pojo.StuListItem">
-        select us.uid,us.username,us.temp from User us,TS ts where ts.tid=#{tid} and ts.sid = us.uid
+    <select id="getStuListById" resultType="com.dongd.quesbank.pojo.StuListItem">
+        select us.uid,us.username,us.temp from User us,TS ts where ts.tid=#{tid} and ts.sid =  us.uid
         <if test="sid!=0">
-            and us.uid like #{sid}
+            and CAST(us.uid AS CHAR) like CONCAT('%', #{sid}, '%')
         </if>
     </select>
+
+    <select id="getStuListByName" resultType="com.dongd.quesbank.pojo.StuListItem">
+
+        select us.uid,us.username,us.temp from User us,TS ts where ts.tid=#{tid} and ts.sid =  us.uid
+        <if test="uname!=''">
+            and us.username like CONCAT('%', #{uname}, '%')
+        </if>
+
+    </select>
+
+    <delete id="deleteStuList">
+        delete from TS where tid=#{tid} and sid=#{sid}
+    </delete>
 
 
 </mapper>

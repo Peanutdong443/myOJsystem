@@ -85,6 +85,11 @@ public class UserController {
         return result;
     }
 
+    @DeleteMapping("/deleteStuList")
+    public Result deleteStuList(@RequestParam("sid") String sid) {
+        Result result = usi.deleteStuList(sid);
+        return result;
+    }
 
 
 }

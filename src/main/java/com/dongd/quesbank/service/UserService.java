@@ -25,4 +25,6 @@ public interface UserService {
     public Result changeInfo(InfoForm infoForm);
 
     public Result getStuList(String sid, int pageNum, int pageSize);
+
+    public Result deleteStuList(String sid);
 }

@@ -30,6 +30,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JwtHelper jwtHelper;
 
+    public static boolean isNumeric(String strNum) {
+        try {
+            Integer.parseInt(strNum);
+            return true;
+        } catch (NumberFormatException | NullPointerException e1) {
+           return false;
+        }
+    }
+
     @Override
     public Result login(LoginForm loginForm) {
 
@@ -156,10 +165,23 @@ public class UserServiceImpl implements UserService {
         int uid = uidThreadLocal.get();
 
         int sid=0;
-        if(id!=null)sid=Integer.parseInt(id);
+        String uname=null;
+        List<StuListItem> stuList=null;
 
-
-        List<StuListItem> stuList=userDao.getStuList(uid,sid);
+        if(id!=null) {
+           if(isNumeric(id)) {
+               sid=Integer.parseInt(id);
+               stuList=userDao.getStuListById(uid,sid);
+               System.out.println("go 1");
+           }else{
+               uname=id;
+               stuList=userDao.getStuListByName(uid,uname);
+               System.out.println(uname+" go 2");
+           }
+        }else{
+            stuList=userDao.getStuListById(uid,sid);
+            System.out.println("go 3");
+        }
 
         PageInfo<StuListItem> pageInfo = new PageInfo(stuList);
         HashMap<String, Object> res = new HashMap();
@@ -167,6 +189,16 @@ public class UserServiceImpl implements UserService {
         res.put("list", pageInfo.getList());
 
         return Result.ok(res);
+    }
+
+    @TokenVerify
+    @Override
+    public Result deleteStuList(String id) {
+        int tid = uidThreadLocal.get();
+        int sid=Integer.parseInt(id);
+        userDao.deleteStuList(tid,sid);
+
+        return Result.ok(null);
     }
 
 }

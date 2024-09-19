@@ -11,5 +11,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserDao extends BaseMapper<User> {
-    public List<StuListItem> getStuList(@Param("tid")int tid,@Param("sid")int sid);
+    public List<StuListItem> getStuListById(@Param("tid")int tid,@Param("sid")int sid);
+    public List<StuListItem> getStuListByName(@Param("tid")int tid,@Param("uname")String uname);
+    public int deleteStuList(@Param("tid")int tid,@Param("sid")int sid);
 }
