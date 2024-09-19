@@ -90,6 +90,11 @@ public class UserController {
         Result result = usi.deleteStuList(sid);
         return result;
     }
+    @GetMapping("/resetPwd")
+    public Result resetPwd(@RequestParam("sid") String sid) {
+        Result result = usi.resetPwd(sid);
+        return result;
+    }
 
 
 }

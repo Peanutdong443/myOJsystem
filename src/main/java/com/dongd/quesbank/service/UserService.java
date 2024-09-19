@@ -27,4 +27,6 @@ public interface UserService {
     public Result getStuList(String sid, int pageNum, int pageSize);
 
     public Result deleteStuList(String sid);
+
+    public Result resetPwd(String sid);
 }

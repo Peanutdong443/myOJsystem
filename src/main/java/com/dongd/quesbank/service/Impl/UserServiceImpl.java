@@ -172,15 +172,12 @@ public class UserServiceImpl implements UserService {
            if(isNumeric(id)) {
                sid=Integer.parseInt(id);
                stuList=userDao.getStuListById(uid,sid);
-               System.out.println("go 1");
            }else{
                uname=id;
                stuList=userDao.getStuListByName(uid,uname);
-               System.out.println(uname+" go 2");
            }
         }else{
             stuList=userDao.getStuListById(uid,sid);
-            System.out.println("go 3");
         }
 
         PageInfo<StuListItem> pageInfo = new PageInfo(stuList);
@@ -198,6 +195,15 @@ public class UserServiceImpl implements UserService {
         int sid=Integer.parseInt(id);
         userDao.deleteStuList(tid,sid);
 
+        return Result.ok(null);
+    }
+
+    @TokenVerify
+    @Override
+    public Result resetPwd(String id) {
+        int sid=Integer.parseInt(id);
+        UpdateWrapper<User> wrapper = new UpdateWrapper<User>().set("password", "2dc030a6179f5bd35fa80dfeb43254a4").eq("uid", sid);
+        userDao.update(wrapper);
         return Result.ok(null);
     }
 
