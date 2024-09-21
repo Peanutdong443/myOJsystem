@@ -1,8 +1,8 @@
 package com.dongd.quesbank.service;
 
-import com.dongd.quesbank.pojo.UserInfoDTO;
-import com.dongd.quesbank.pojo.LoginDTO;
-import com.dongd.quesbank.pojo.RegisterDTO;
+import com.dongd.quesbank.pojo.DTO.UserInfoDTO;
+import com.dongd.quesbank.pojo.DTO.LoginDTO;
+import com.dongd.quesbank.pojo.DTO.RegisterDTO;
 import com.dongd.quesbank.utils.Result;
 
 

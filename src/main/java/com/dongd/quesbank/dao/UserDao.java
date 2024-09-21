@@ -1,7 +1,7 @@
 package com.dongd.quesbank.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dongd.quesbank.pojo.StuListVO;
-import com.dongd.quesbank.pojo.UserDO;
+import com.dongd.quesbank.pojo.VO.StuListVO;
+import com.dongd.quesbank.pojo.DO.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

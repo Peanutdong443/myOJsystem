@@ -1,6 +1,7 @@
-package com.dongd.quesbank.pojo;
+package com.dongd.quesbank.pojo.DO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.dongd.quesbank.pojo.DTO.RegisterDTO;
 import lombok.Data;
 
 @Data

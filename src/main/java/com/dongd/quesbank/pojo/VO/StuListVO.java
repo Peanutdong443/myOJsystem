@@ -1,4 +1,4 @@
-package com.dongd.quesbank.pojo;
+package com.dongd.quesbank.pojo.VO;
 import lombok.Data;
 
 @Data

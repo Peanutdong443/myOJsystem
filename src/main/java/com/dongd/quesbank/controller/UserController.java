@@ -1,8 +1,8 @@
 package com.dongd.quesbank.controller;
-import com.dongd.quesbank.pojo.UserInfoDTO;
-import com.dongd.quesbank.pojo.LoginDTO;
-import com.dongd.quesbank.pojo.PwdDTO;
-import com.dongd.quesbank.pojo.RegisterDTO;
+import com.dongd.quesbank.pojo.DTO.UserInfoDTO;
+import com.dongd.quesbank.pojo.DTO.LoginDTO;
+import com.dongd.quesbank.pojo.DTO.PwdDTO;
+import com.dongd.quesbank.pojo.DTO.RegisterDTO;
 import com.dongd.quesbank.service.Impl.UserServiceImpl;
 import com.dongd.quesbank.service.PicUploadService;
 import com.dongd.quesbank.utils.JwtHelper;
