@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dongd.quesbank.aop.TokenVerify;
 import com.dongd.quesbank.config.AliyunConfig;
 import com.dongd.quesbank.dao.UserDao;
-import com.dongd.quesbank.pojo.User;
+import com.dongd.quesbank.pojo.UserDO;
 import com.dongd.quesbank.utils.Result;
 import com.dongd.quesbank.utils.ResultCodeEnum;
 import org.apache.commons.lang3.RandomUtils;
@@ -108,7 +108,7 @@ public class PicUploadService {
 
         String[] ptr=url.split("//");
 
-        UpdateWrapper<User> wrapper=new UpdateWrapper<User>().set("avatarurl",ptr[1]).eq("uid",uid);
+        UpdateWrapper<UserDO> wrapper=new UpdateWrapper<UserDO>().set("avatarurl",ptr[1]).eq("uid",uid);
 
         userDao.update(wrapper);
 

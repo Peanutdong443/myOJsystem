@@ -2,15 +2,15 @@ package com.dongd.quesbank.pojo;
 import lombok.Data;
 
 @Data
-public class LoginForm {
-    private String uid;
+public class RegisterDTO {
+    private  String uid;
     private String password;
     private int usertype;
 
-    public LoginForm() {
+    public RegisterDTO() {
     }
 
-    public LoginForm(String uid, String password, int usertype) {
+    public RegisterDTO(String uid, String salt, String password, int usertype) {
         this.uid = uid;
         this.password = password;
         this.usertype = usertype;

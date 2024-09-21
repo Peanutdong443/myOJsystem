@@ -1,8 +1,8 @@
 package com.dongd.quesbank.controller;
-import com.dongd.quesbank.pojo.InfoForm;
-import com.dongd.quesbank.pojo.LoginForm;
-import com.dongd.quesbank.pojo.PwdForm;
-import com.dongd.quesbank.pojo.RegisterForm;
+import com.dongd.quesbank.pojo.UserInfoDTO;
+import com.dongd.quesbank.pojo.LoginDTO;
+import com.dongd.quesbank.pojo.PwdDTO;
+import com.dongd.quesbank.pojo.RegisterDTO;
 import com.dongd.quesbank.service.Impl.UserServiceImpl;
 import com.dongd.quesbank.service.PicUploadService;
 import com.dongd.quesbank.utils.JwtHelper;
@@ -26,7 +26,7 @@ public class UserController {
     private PicUploadService pls;
 
     @PostMapping ("/login")
-    public Result login(@RequestBody LoginForm loginForm){
+    public Result login(@RequestBody LoginDTO loginForm){
         Result result = usi.login(loginForm);
         return result;
     }
@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Result register(@RequestBody RegisterForm registerForm){
-        Result result = usi.register(registerForm);
+    public Result register(@RequestBody RegisterDTO registerDTO){
+        Result result = usi.register(registerDTO);
         return result;
     }
 
@@ -52,15 +52,15 @@ public class UserController {
     }
 
     @PostMapping("/changepwd")
-    public Result changepwd(@RequestBody PwdForm pwdForm){
-        Result result = usi.changepwd(pwdForm.getOldPassword(),pwdForm.getNewPassword());
+    public Result changepwd(@RequestBody PwdDTO pwdDTO){
+        Result result = usi.changepwd(pwdDTO.getOldPassword(), pwdDTO.getNewPassword());
         return result;
     }
 
 
     @PostMapping("/changeInfo")
-    public Result changeInfo(@RequestBody InfoForm infoForm){
-        Result result = usi.changeInfo(infoForm);
+    public Result changeInfo(@RequestBody UserInfoDTO userInfoDTO){
+        Result result = usi.changeInfo(userInfoDTO);
         return result;
     }
 
@@ -93,6 +93,12 @@ public class UserController {
     @GetMapping("/resetPwd")
     public Result resetPwd(@RequestParam("sid") String sid) {
         Result result = usi.resetPwd(sid);
+        return result;
+    }
+
+    @GetMapping("/getUsertype")
+    public Result getUsertype(){
+        Result result = usi.getUsertype();
         return result;
     }
 

@@ -2,15 +2,15 @@ package com.dongd.quesbank.pojo;
 import lombok.Data;
 
 @Data
-public class StuListItem {
+public class StuListVO {
     private int uid;
     private String username;
     private int temp;
 
-    public StuListItem() {
+    public StuListVO() {
     }
 
-    public StuListItem(int uid, String username, int temp) {
+    public StuListVO(int uid, String username, int temp) {
         this.uid = uid;
         this.username = username;
         this.temp = temp;

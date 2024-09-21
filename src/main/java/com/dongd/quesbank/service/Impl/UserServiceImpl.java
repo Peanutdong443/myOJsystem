@@ -11,7 +11,6 @@ import com.dongd.quesbank.utils.Result;
 import com.dongd.quesbank.utils.ResultCodeEnum;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import net.sf.jsqlparser.statement.update.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,9 +39,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result login(LoginForm loginForm) {
+    public Result login(LoginDTO loginForm) {
 
-        User us=userDao.selectById(Long.valueOf(loginForm.getUid()));
+        UserDO us=userDao.selectById(Long.valueOf(loginForm.getUid()));
         System.out.println("User: "+us);
         System.out.println(MD5Util.encrypt(loginForm.getPassword()));
         if(us==null){
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
             Map<String,String> data=new HashMap();
             data.put("token",token);
 
-            QueryWrapper<User> queryWrapper=new QueryWrapper<User>().select("avatarurl").eq("uid",us.getUid());
+            QueryWrapper<UserDO> queryWrapper=new QueryWrapper<UserDO>().select("avatarurl").eq("uid",us.getUid());
 
             String avatarUrl=userDao.selectOne(queryWrapper).getAvatarurl();
 
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
         if(uid.equals("null"))return Result.ok(null);
 
-        QueryWrapper<User> Wrapper=new QueryWrapper<User>().select("uid").eq("uid",Integer.parseInt(uid));
+        QueryWrapper<UserDO> Wrapper=new QueryWrapper<UserDO>().select("uid").eq("uid",Integer.parseInt(uid));
         int count=userDao.selectCount(Wrapper).intValue();
 
         if(count==0) return Result.ok(null);
@@ -82,16 +81,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result register(RegisterForm registerForm) {
+    public Result register(RegisterDTO registerDTO) {
 
-        QueryWrapper<User> Wrapper=new QueryWrapper<User>().select("uid").eq("uid",Integer.parseInt(registerForm.getUid()));
+        QueryWrapper<UserDO> Wrapper=new QueryWrapper<UserDO>().select("uid").eq("uid",Integer.parseInt(registerDTO.getUid()));
         int count=userDao.selectCount(Wrapper).intValue();
 
         if(count>0) return Result.build(null,ResultCodeEnum.USERID_EXIST);
 
-        registerForm.setPassword(MD5Util.encrypt(registerForm.getPassword()));
+        registerDTO.setPassword(MD5Util.encrypt(registerDTO.getPassword()));
 
-        userDao.insert(new User(registerForm));
+        userDao.insert(new UserDO(registerDTO));
 
         return Result.ok(null);
     }
@@ -102,12 +101,12 @@ public class UserServiceImpl implements UserService {
 
         int uid=uidThreadLocal.get();
 
-        User user= userDao.selectById(uid);
+        UserDO userDO = userDao.selectById(uid);
 
-        user.setPassword("");
+        userDO.setPassword("");
 
         Map data=new HashMap();
-        data.put("User",user);
+        data.put("User", userDO);
 
         return Result.ok(data);
     }
@@ -118,15 +117,15 @@ public class UserServiceImpl implements UserService {
 
         int uid=uidThreadLocal.get();
 
-        User user= userDao.selectById(uid);
+        UserDO userDO = userDao.selectById(uid);
 
-        if(user==null){
+        if(userDO ==null){
             System.out.println("未找到该用户");
             return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
         }
-        else if(MD5Util.encrypt(oldpassword).equals(user.getPassword())){
+        else if(MD5Util.encrypt(oldpassword).equals(userDO.getPassword())){
 
-            UpdateWrapper<User> wrapper = new UpdateWrapper<User>().set("password",MD5Util.encrypt(newpassword)).eq("uid",uid);
+            UpdateWrapper<UserDO> wrapper = new UpdateWrapper<UserDO>().set("password",MD5Util.encrypt(newpassword)).eq("uid",uid);
 
             userDao.update(wrapper);
 
@@ -141,12 +140,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @TokenVerify
-    public Result changeInfo(InfoForm infoForm){
+    public Result changeInfo(UserInfoDTO userInfoDTO){
         int uid=uidThreadLocal.get();
 
-        User user= userDao.selectById(uid);
+        UserDO userDO = userDao.selectById(uid);
 
-        UpdateWrapper<User> wrapper = new UpdateWrapper<User>().set("username",infoForm.getUsername()).set("sign",infoForm.getSign()).eq("uid",uid);
+        UpdateWrapper<UserDO> wrapper = new UpdateWrapper<UserDO>().set("username", userInfoDTO.getUsername()).set("sign", userInfoDTO.getSign()).eq("uid",uid);
 
         userDao.update(wrapper);
 
@@ -166,7 +165,7 @@ public class UserServiceImpl implements UserService {
 
         int sid=0;
         String uname=null;
-        List<StuListItem> stuList=null;
+        List<StuListVO> stuList=null;
 
         if(id!=null) {
            if(isNumeric(id)) {
@@ -180,7 +179,7 @@ public class UserServiceImpl implements UserService {
             stuList=userDao.getStuListById(uid,sid);
         }
 
-        PageInfo<StuListItem> pageInfo = new PageInfo(stuList);
+        PageInfo<StuListVO> pageInfo = new PageInfo(stuList);
         HashMap<String, Object> res = new HashMap();
         res.put("total", pageInfo.getTotal());
         res.put("list", pageInfo.getList());
@@ -202,9 +201,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result resetPwd(String id) {
         int sid=Integer.parseInt(id);
-        UpdateWrapper<User> wrapper = new UpdateWrapper<User>().set("password", "2dc030a6179f5bd35fa80dfeb43254a4").eq("uid", sid);
+        UpdateWrapper<UserDO> wrapper = new UpdateWrapper<UserDO>().set("password", "2dc030a6179f5bd35fa80dfeb43254a4").eq("uid", sid);
         userDao.update(wrapper);
         return Result.ok(null);
+    }
+
+    @TokenVerify
+    @Override
+    public Result getUsertype() {
+
+        int uid=uidThreadLocal.get();
+        UserDO us=userDao.selectById(uid);
+
+        Map<String,Integer> data=new HashMap<>();
+
+        data.put("usertype",us.getUsertype());
+
+        return Result.ok(data);
     }
 
 }
