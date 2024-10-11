@@ -102,5 +102,11 @@ public class UserController {
         return result;
     }
 
+    @GetMapping("/getUsertemp")
+    public Result getUsertemp(){
+        Result result = usi.getUsertemp();
+        return result;
+    }
+
 
 }

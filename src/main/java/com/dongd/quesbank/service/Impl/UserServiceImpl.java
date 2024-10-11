@@ -224,4 +224,18 @@ public class UserServiceImpl implements UserService {
         return Result.ok(data);
     }
 
+    @TokenVerify
+    @Override
+    public Result getUsertemp() {
+
+        int uid=uidThreadLocal.get();
+        UserDO us=userDao.selectById(uid);
+
+        Map<String,Integer> data=new HashMap<>();
+
+        data.put("temp",us.getTemp());
+
+        return Result.ok(data);
+    }
+
 }

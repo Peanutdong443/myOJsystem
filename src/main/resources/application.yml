@@ -13,6 +13,12 @@ spring:
       max-file-size: 100MB
       max-request-size: 1000MB
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+
 
 mybatis:
   type-aliases-package: com.example.demo.model

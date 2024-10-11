@@ -39,4 +39,5 @@ public class UserDO {
         this.avatarurl = avatarurl;
         this.temp = temp;
     }
+
 }
