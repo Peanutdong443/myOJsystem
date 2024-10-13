@@ -238,4 +238,20 @@ public class UserServiceImpl implements UserService {
         return Result.ok(data);
     }
 
+    @Override
+    public Result disableUser(String id) {
+        int sid=Integer.parseInt(id);
+        UpdateWrapper<UserDO> wrapper = new UpdateWrapper<UserDO>().set("temp", "0").eq("uid", sid);
+        userDao.update(wrapper);
+        return Result.ok(null);
+    }
+
+    @Override
+    public Result enableUser(String id) {
+        int sid=Integer.parseInt(id);
+        UpdateWrapper<UserDO> wrapper = new UpdateWrapper<UserDO>().set("temp", "1").eq("uid", sid);
+        userDao.update(wrapper);
+        return Result.ok(null);
+    }
+
 }

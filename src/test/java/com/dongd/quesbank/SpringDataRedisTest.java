@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 @SpringBootTest
 public class SpringDataRedisTest {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Test
     public void testRedisTemplate(){

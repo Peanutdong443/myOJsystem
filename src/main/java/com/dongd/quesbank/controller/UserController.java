@@ -108,5 +108,17 @@ public class UserController {
         return result;
     }
 
+    @GetMapping("/disable")
+    public Result disableUser(@RequestParam("sid") String sid){
+        Result result = usi.disableUser(sid);
+        return result;
+    }
+
+    @GetMapping("/enable")
+    public Result enableUser(@RequestParam("sid") String sid){
+        Result result = usi.enableUser(sid);
+        return result;
+    }
+
 
 }

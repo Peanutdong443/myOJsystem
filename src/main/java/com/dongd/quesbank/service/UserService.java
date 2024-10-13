@@ -31,4 +31,8 @@ public interface UserService{
     public Result getUsertype();
 
     public Result getUsertemp();
+
+    public Result disableUser(String sid);
+
+    public Result enableUser(String sid);
 }
