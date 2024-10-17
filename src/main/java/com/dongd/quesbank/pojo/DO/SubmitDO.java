@@ -8,33 +8,31 @@ import lombok.Data;
 @TableName("Submit")
 public class SubmitDO {
     @TableId(value = "sbmid")
-    private int sbmid;
+    private String sbmid;
     private int qid;
     private int uid;
-    private String language;
+    private int languageid;
     private String sourcecode;
     private int status;
-    private int runtime;
-    private int runmem;
+    private int passednum;
 
     public SubmitDO() {
     }
 
-    public SubmitDO(int qid, int uid,String language, String sourcecode) {
+    public SubmitDO(int qid, int uid,int languageid, String sourcecode) {
         this.uid=uid;
         this.qid = qid;
-        this.language = language;
+        this.languageid = languageid;
         this.sourcecode = sourcecode;
     }
 
-    public SubmitDO(int sbmid, int qid, int uid,int runmem, int runtime, int status, String sourcecode, String language) {
+    public SubmitDO(String sbmid, int qid, int uid, String sourcecode, int languageid, int passednum, int status) {
         this.sbmid = sbmid;
         this.qid = qid;
-        this.uid=uid;
-        this.runmem = runmem;
-        this.runtime = runtime;
-        this.status = status;
+        this.uid = uid;
         this.sourcecode = sourcecode;
-        this.language = language;
+        this.languageid = languageid;
+        this.passednum = passednum;
+        this.status = status;
     }
 }

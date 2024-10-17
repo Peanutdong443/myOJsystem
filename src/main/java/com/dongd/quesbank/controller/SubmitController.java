@@ -1,6 +1,7 @@
 package com.dongd.quesbank.controller;
 
 import com.dongd.quesbank.pojo.DTO.LoginDTO;
+import com.dongd.quesbank.pojo.DTO.SubmitDTO;
 import com.dongd.quesbank.service.SubmitService;
 import com.dongd.quesbank.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class SubmitController {
     private SubmitService ss;
 
     @PostMapping("/submitcode")
-    public Result submitcode(@RequestBody byte[] sourcecode) throws IOException, InterruptedException {
-        Result result = ss.exam(sourcecode);
+    public Result submitcode(@RequestBody SubmitDTO submitDTO) throws IOException, InterruptedException {
+        Result result = ss.exam(submitDTO);
         return result;
     }
 }
