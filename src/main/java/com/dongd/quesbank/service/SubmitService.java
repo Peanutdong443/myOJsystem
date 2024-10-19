@@ -1,14 +1,17 @@
 package com.dongd.quesbank.service;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dongd.quesbank.aop.TokenVerify;
 import com.dongd.quesbank.dao.SubmitDao;
 import com.dongd.quesbank.pojo.DO.SubmitDO;
 import com.dongd.quesbank.pojo.DTO.SubmitDTO;
+import com.dongd.quesbank.pojo.DTO.SubmitQueryDTO;
 import com.dongd.quesbank.utils.Result;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,16 +20,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import static com.dongd.quesbank.aop.aspect.tokenVerifyAspect.uidThreadLocal;
-import static java.lang.Thread.sleep;
 
 @Service
 public class SubmitService {
@@ -34,8 +30,7 @@ public class SubmitService {
     @Autowired
     SubmitDao submitDao;
 
-    private static final int THREAD_COUNT = 4; // 线程数
-    private static StringBuilder contentBuilder = new StringBuilder();
+
 
 
     public static String generateUniqueId() {
@@ -173,6 +168,15 @@ public class SubmitService {
         Map<String,String> data=new HashMap();
         data.put("status",""+status);
         return Result.ok(data);
+    }
+
+    @TokenVerify
+    public Result getsubmitlist(int id,int qid){
+        if(id==0){
+            int uid=uidThreadLocal.get();
+            return Result.ok(submitDao.getSubmitList(uid,qid));
+        }
+        return Result.ok(submitDao.getSubmitList(id,qid));
     }
 
 }

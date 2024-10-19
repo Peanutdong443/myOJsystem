@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dongd.quesbank.dao.SubmitDao">
+    <select id="getSubmitList" resultType="com.dongd.quesbank.pojo.VO.SubmitListVO">
+        select smt.sbmid,smt.languageid,smt.sourcecode,smt.status,smt.passednum from Submit smt where smt.qid = #{qid} and smt.uid = #{uid}
+    </select>
 </mapper>
